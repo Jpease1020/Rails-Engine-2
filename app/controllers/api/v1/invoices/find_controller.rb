@@ -1,6 +1,10 @@
 class Api::V1::Invoices::FindController < Api::ApiController
   respond_to :json
 
+  def index
+    respond_with Invoice.where(invoice_params)
+  end
+
   def show
     respond_with Invoice.find_by(invoice_params)
   end
