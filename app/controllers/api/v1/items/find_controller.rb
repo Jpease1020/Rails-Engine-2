@@ -1,6 +1,10 @@
 class Api::V1::Items::FindController < Api::ApiController
   respond_to :json
 
+  def index
+    respond_with Item.where(item_params)
+  end
+
   def show
     respond_with Item.find(item_params)
   end
