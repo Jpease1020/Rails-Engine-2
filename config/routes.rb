@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       namespace :customers do
-        # resources :find, only: [:show]
         get 'find', to: 'find#show'
       end
 
