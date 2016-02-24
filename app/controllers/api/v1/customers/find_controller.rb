@@ -10,7 +10,6 @@ class Api::V1::Customers::FindController < Api::ApiController
   end
 
   private
-
   def customer_params
     params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
   end
