@@ -12,7 +12,8 @@ class Api::V1::Items::FindController < Api::ApiController
   private
 
   def item_params
-    params.permit(:name,
+    params.permit(:id,
+                  :name,
                   :description,
                   :unit_price,
                   :created_at,
