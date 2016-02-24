@@ -6,7 +6,7 @@ class Api::V1::Items::FindController < Api::ApiController
   end
 
   def show
-    respond_with Item.find(item_params)
+    respond_with Item.order(id: :desc).find_by(item_params)
   end
 
   private
