@@ -19,6 +19,7 @@ group :development, :test do
   gem 'factory_girl_rails', :require => false
   gem 'database_cleaner'
   gem 'pry'
+  gem 'table_print'
 end
 
 group :test do
