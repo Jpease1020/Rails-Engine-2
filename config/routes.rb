@@ -25,6 +25,13 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show] do
         resources :invoices, only: [:index], module: "merchants"
         resources :items,    only: [:index], module: "merchants"
+
+        member do
+          get 'revenue', to: 'merchants/revenue#show'
+        end
+        # resources :revenue,    only: [:index], module: "merchants"
+
+
       end
 
       namespace :items do
