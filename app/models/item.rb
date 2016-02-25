@@ -4,10 +4,20 @@ class Item < ActiveRecord::Base
   belongs_to :merchant
 
   def self.most_revenue(count)
-    Item.select("items.*, count('invoice_item.unit_price * invoice_item.quantity') AS item_revenue").joins(invoice_items: [invoice: :transactions]).group("items.id").where("transactions.result = ?", "success").order("item_revenue DESC").take(count)
+    select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) AS item_revenue")
+        .joins(invoice_items: [invoice: :transactions])
+        .group("items.id")
+        .where("transactions.result = ?", "success")
+        .order("item_revenue DESC")
+        .take(count)
   end
 
   def self.most_items(count)
-    Item.select("items.*, count('invoice_item.quantity') AS item_count").joins(invoice_items: [invoice: :transactions]).group("items.id").where("transactions.result = ?", "success").order("item_count DESC").take(count)
+    select("items.*, count(invoice_items.quantity) AS item_count")
+        .joins(invoice_items: [invoice: :transactions])
+        .group("items.id")
+        .where("transactions.result = ?", "success")
+        .order("item_count DESC")
+        .take(count)
   end
 end
