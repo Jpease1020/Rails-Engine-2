@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe "revenue" do
-  describe "GET /api/v1/merchants/revenue?date=x" do
-    it "returns the total revenue for date x across all merchants" do
+  describe "GET /api/v1/merchants/:id/revenue" do
+    it "returns the total revenue for that merchant across all transactions" do
       item_list_1            = create_list(:item, 7)
       merchant_1             = create(:merchant)
       merchant_2             = create(:merchant)
@@ -17,12 +17,11 @@ describe "revenue" do
       invoice_items_2   = create_list(:invoice_item, 3, item_id: item_list_1.third.id, invoice_id: invoice_2.id)
       invoice_items_3   = create_list(:invoice_item, 3, item_id: item_list_1.second.id, invoice_id: invoice_3.id)
 
-      get "/api/v1/merchants/revenue?date=#{invoice_1.created_at}", {}, { "Accept" => "application/json" }
-
+      get "/api/v1/merchants/#{merchant_1.id}/revenue", {}, { "Accept" => "application/json" }
       expect(response.status).to eq 200
 
       revenue = JSON.parse(response.body)
-      assert_equal 3628.8, revenue['total_revenue'].to_f
+      assert_equal 2592.0, revenue['revenue'].to_f
     end
   end
 end
