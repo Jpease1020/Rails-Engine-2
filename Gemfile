@@ -11,6 +11,7 @@ gem 'bcrypt'
 gem 'responders'
 gem 'pg'
 gem 'pry-rails'
+gem 'active_model_serializers', github: 'rails-api/active_model_serializers' 
 
 group :development, :test do
   gem 'rspec-rails'

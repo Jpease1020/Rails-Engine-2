@@ -1,10 +1,8 @@
 class Merchant < ActiveRecord::Base
   has_many :invoices
   has_many :items
-  # scope :ci_find, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase).first }
 
   def self.most_revenue(quantity)
-    # byebug
     select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
           .joins(invoices: [:transactions, :invoice_items])
           .group("merchants.id")
@@ -20,7 +18,11 @@ class Merchant < ActiveRecord::Base
           .where("transactions.result = ?", "success")
           .order("total_sold DESC")
           .take(quantity)
-          # byebug
-      # a
+  end
+
+  def self.revenue(date)
+    { "total_revenue" => joins(invoices: [:invoice_items, :transactions])
+                          .where('invoices.updated_at = ? AND transactions.result = ?', date, "success")
+                          .sum("invoice_items.quantity * invoice_items.unit_price")}
   end
 end
