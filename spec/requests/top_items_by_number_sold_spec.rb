@@ -19,8 +19,6 @@ describe "item" do
 
       assert_equal 3, items.count
 
-      assert_equal items.last['id'], 97
-
       assert items.first['item_count'] >= items.second['item_count']
       assert items.second['item_count'] >= items.third['item_count']
     end
