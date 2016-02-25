@@ -14,9 +14,11 @@ Rails.application.routes.draw do
       end
 
       namespace :merchants do
-        get 'find',     to: 'find#show'
-        get 'find_all', to: 'find#index'
-        get 'random',   to: 'random#show'
+        get 'find',         to: 'find#show'
+        get 'find_all',     to: 'find#index'
+        get 'random',       to: 'random#show'
+        get 'most_revenue', to: 'most_revenue#index'
+        get 'most_items',   to: 'most_items#index'
       end
 
       resources :merchants, only: [:index, :show] do
