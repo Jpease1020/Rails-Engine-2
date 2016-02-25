@@ -8,8 +8,12 @@ class Api::V1::Merchants::RevenueController < Api::ApiController
 
   def show
     # respond_with Merchant.find(params[:id]).revenue
-
-    respond_with Merchant.revenue(params[:id])
+    if revenue_params[:date]
+      date = revenue_params[:date]
+      respond_with Merchant.revenue_by_date(params[:id], date)
+    else
+      respond_with Merchant.revenue(params[:id])
+    end
   end
 
   private
