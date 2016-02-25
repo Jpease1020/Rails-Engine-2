@@ -18,7 +18,7 @@ describe "item" do
       items = JSON.parse(response.body)
 
       assert_equal 3, items.count
-      assert_equal items.last['id'], 103
+
       assert items.first['item_revenue'] >= items.second['item_revenue']
       assert items.second['item_revenue'] >= items.third['item_revenue']
     end
