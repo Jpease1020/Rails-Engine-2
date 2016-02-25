@@ -32,6 +32,13 @@ class Merchant < ActiveRecord::Base
                   .sum("invoice_items.quantity * invoice_items.unit_price")}
   end
 
+  def self.pending_invoices_customers(id)
+    select("customers.*")
+      .joins(invoices: [:customer, :transactions])
+      .where('merchants.id = ?', id)
+      .where.not('transactions.result = ?', "success").uniq
+  end
+
   def self.all_merchant_revenue(date)
     { "total_revenue" => joins(invoices: [:invoice_items, :transactions])
                           .where('invoices.updated_at = ? AND transactions.result = ?', date, "success")
