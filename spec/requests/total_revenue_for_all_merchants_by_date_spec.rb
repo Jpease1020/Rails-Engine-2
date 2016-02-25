@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe "merchants" do
-  describe "GET /api/v1/merchants/most_items?quantity=x" do
-    it "returns the top x merchants ranked by total number of items sold" do
+describe "revenue" do
+  describe "GET /api/v1/merchants/revenue?date=x" do
+    it "returns the total revenue for date x across all merchants" do
       item_list_1            = create_list(:item, 7)
       merchant_1             = create(:merchant)
       merchant_2             = create(:merchant)
@@ -17,15 +17,13 @@ describe "merchants" do
       invoice_items_2   = create_list(:invoice_item, 3, item_id: item_list_1.third.id, invoice_id: invoice_2.id)
       invoice_items_3   = create_list(:invoice_item, 3, item_id: item_list_1.second.id, invoice_id: invoice_3.id)
 
-      get "/api/v1/merchants/most_items?quantity=3", {}, { "Accept" => "application/json" }
+      get "/api/v1/merchants/revenue?date=#{invoice_1.created_at}", {}, { "Accept" => "application/json" }
 
       expect(response.status).to eq 200
 
-      merchants = JSON.parse(response.body)
-      assert_equal 3, merchants.count
-
-      assert merchants.first['total_sold'].to_i >= merchants.second['total_sold'].to_i
-      assert merchants.second['total_sold'].to_i >= merchants.third['total_sold'].to_i
+      revenue = JSON.parse(response.body)
+# byebug
+      assert_equal 3628.8, revenue['total_revenue'].to_f
     end
   end
 end

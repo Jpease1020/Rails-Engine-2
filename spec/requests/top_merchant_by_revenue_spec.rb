@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "item" do
+describe "merchants" do
   describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     it "returns the top x merchants ranked by total revenue" do
       item_list_1            = create_list(:item, 7)
